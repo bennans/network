@@ -1,0 +1,158 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">个人网盘</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse nav-div" id="collapsibleNavbar">
+        <ul class="navbar-nav justify-content-end" >
+            <li class="nav-item item-type active">
+                <a class="nav-link" href="#">全部</a>
+            </li>
+            <li class="nav-item item-type">
+                <a class="nav-link" href="#">图片</a>
+            </li>
+            <li class="nav-item item-type">
+                <a class="nav-link" href="#">压缩包</a>
+            </li>
+            <li class="nav-item item-type ">
+                <a class="nav-link" href="#">文档</a>
+            </li>
+            <li class="nav-item item-type ">
+                <a class="nav-link" href="#">编程语言</a>
+            </li>
+            <li class="nav-item item-type next-user">
+                <a class="nav-link" href="#">表格</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <span th:text="${USERNAME}"></span>
+                </a>
+                <div class="dropdown-menu user-menu">
+                    <a class="dropdown-item" href="#">个人信息</a>
+                    <a class="dropdown-item" href="#">安全管理</a>
+                    <a class="dropdown-item" href="#">退出</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="operate">
+        <span><a href="javascript:;" id="backpage"><返回上一级</a></span>
+        <span class="newfloer">
+            <a href="#"  data-toggle="modal" data-target="#uploadModal">上传文件</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="#" data-toggle="modal" data-target="#folderModal">新建文件夹</a><span>
+    </div>
+    <span id="parentfdid" class="hide" th:text="${parentfdid}"></span>
+    <div class="row" id="file-list">
+        <div class="col-4 col-sm-3 col-md-2 col-lg-1 file-item text-center item-folder"th:each="folderlist:${folderlist}">
+            <span class="fdid hide" th:text="${folderlist.fdid}"></span>
+            <div class="file-img">
+                <img src="img/folder.png">
+            </div>
+            <div class="file-desc" data-toggle="tooltip" th:title="${folderlist.fdname}">
+                <span th:text="${folderlist.fdname}"></span>
+            </div>
+        </div>
+        <div class="col-4 col-sm-3 col-md-2 col-lg-1 file-item text-center"th:each="filelist:${filelist}">
+            <span class="fdid hide" th:text="${filelist.fid}"></span>
+            <div class="file-img">
+                <img th:if="${filelist.ftid}==1" src="img/document.png">
+                <img th:if="${filelist.ftid}==2" src="img/package.png">
+                <img th:if="${filelist.ftid}==3" src="img/image.png">
+                <img th:if="${filelist.ftid}==4" src="img/programme.png">
+            </div>
+            <div class="file-desc"  data-toggle="tooltip" th:title="${filelist.fname}">
+                <span th:text="${filelist.fname}"></span>
+            </div>
+        </div>
+    </div>
+   <!-- 上传文件模态框-->
+    <div class="modal fade" id="uploadModal">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">上传文件</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" id="uploadform">
+                        <input type="file" name="file" id="file"/>
+                    </form>
+                    <span>上传进度</span>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" id="processBar" style="width:0%"></div>
+                    </div>
+                   <!-- <input type="file" class="" id="uploafile-add"></input>
+                    <div id="uploadfile-list">
+                    </div>-->
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info" id="upload-btn">上传</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 创建文件夹模态框-->
+    <div class="modal fade" id="folderModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">创建文件夹</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <input class="form-control " id="foldername" type="text"  placeholder="请输入文件名" />
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="createfolderbtn" data-dismiss="modal">创建</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class = "menu menu-folder">
+        <ul>
+            <li class="openfolder">打开</li>
+            <li >重命名</li>
+            <li >删除</li>
+            <li >详情</li>
+        </ul>
+    </div>
+    <div class = "menu menu-file">
+        <ul>
+            <li  class="download">下载</li>
+            <li >重命名</li>
+            <li >删除</li>
+            <li >详情</li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

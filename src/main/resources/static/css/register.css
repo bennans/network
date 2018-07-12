@@ -1,0 +1,26 @@
+.loginback{
+    width: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+    background-color: #fff;
+    margin: 100px auto;
+}
+.form-control{
+    margin: 20px 0;
+}
+.loginback span{
+    font-size: 20px;
+    color: #888;
+}
+.vcode-input{
+    width:60%;
+    display:inline;
+}
+.sendcode{
+    margin-left: 30px;
+}
+.a-register{
+    color: #888;
+}
+
+.bg {display: table;width: 100%;height: 100%;color: #fff;background: url('../img/back.jpg') no-repeat bottom center;background-size: cover;}

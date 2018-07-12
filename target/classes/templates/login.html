@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<div class="bg">
+    <div class="loginback">
+        <span class="text-login"><strong>登录</strong></span>
+        <input name="email" class="form-control " id="email" type="text" placeholder="输入你的邮箱"/>
+        <input name="pwd" class="form-control " id="pwd" type="password"  placeholder="密码" />
+        <input name="code" class="form-control vcode-input" id="code" type="text"  placeholder="验证码" />
+        <img src="/getCode" id="Verify" class="Verify vcode-img"  style="cursor:hand;" alt="看不清，换一张"/>
+        <br>
+        <button type="button" class="btn btn-secondary btn-block " id="loginbtn" name="submit">登录</button>
+        <a href="register.html" class="a-register">立即注册</a>
+        <a href="register.jsp" class="a-register text-right">忘记密码</a>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/login.js}"></script>
+</html>
